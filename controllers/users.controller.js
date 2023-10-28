@@ -1,11 +1,10 @@
 import userModel from "../models/user.model";
-import bcrypt from 'brcypt'
 import jwt from "jsonwebtoken";
 import Cookies from "cookies";
 import fs from "fs";
 import path from "path";
 import multer from "multer";
-import otpGenerator from "otp-generator";
+import bcrypt from "bcrypt";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -77,16 +76,7 @@ export const addUser = (req, res) => {
     uploadUserImage(req, res, function (err) {
       if (err) return res.status(400).json({ message: err.message });
 
-      const {
-        firstname,
-        lastname,
-        email,
-        password,
-        contact,
-        dateofbirth,
-        gender,
-        about,
-      } = req.body;
+      const { email, password, role } = req.body;
       let avatar = null;
       if (req.file !== undefined) {
         avatar = req.file.filename;
@@ -95,15 +85,9 @@ export const addUser = (req, res) => {
 
       const hashPassword = bcrypt.hashSync(password, 10);
       const userData = new userModel({
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
+        email,
         password: hashPassword,
-        contact: contact,
-        dateofbirth: dateofbirth,
-        gender: gender,
-        about: about,
-        avatar: avatar,
+        role,
       });
       userData.save();
       if (userData) {
