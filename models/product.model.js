@@ -45,7 +45,7 @@ const ProductScehma = new Schema({
     default: null,
   },
   status: {
-    type: Array,
+    type: String,
     enum: ["In Stock", "Out of Stock"],
     default: "In Stock",
   },
