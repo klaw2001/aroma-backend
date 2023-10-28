@@ -3,6 +3,9 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import userRouter from "./routers/user.router";
+import categoryrouter from "./routers/category.router";
+import subcategoryRouter from "./routers/subcategory.router";
 
 const app = express();
 
@@ -38,3 +41,6 @@ main();
 app.listen(PORT, () => {
   console.log("Your server running on http://localhost:" + PORT);
 });
+app.use('/users',userRouter)
+app.use('/category',categoryrouter)
+app.use('/sub-category',subcategoryRouter)

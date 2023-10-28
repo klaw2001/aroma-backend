@@ -1,5 +1,5 @@
 import userModel from "../models/user.model";
-import bcrypt from "bcrypt";
+import bcrypt from 'brcypt'
 import jwt from "jsonwebtoken";
 import Cookies from "cookies";
 import fs from "fs";
