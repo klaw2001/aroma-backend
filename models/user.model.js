@@ -45,10 +45,11 @@ const UserSchema = new Schema({
         enum: ['user', 'admin'], 
         default: 'user', 
       },
-    // status:{
-    //     type:Number,
-    //     default:null
-    // }
+    status:{
+        type:String,
+        enum: ['active', 'inactive'], 
+        default:'inactive'
+    }
 })
 
 export default mongoose.model("User",UserSchema)

@@ -125,15 +125,15 @@ export const updateUser = async (req, res) => {
 
       const userData = await userModel.findOne({ _id: userID });
 
-      let avatar = userData.avatar;
+      let avatar = userData ? userData.avatar : null;
 
       if (req.file !== undefined) {
         avatar = req.file.filename;
-        if (fs.existsSync("./uploads/newFolder" + userData.avatar)) {
+        if (userData && fs.existsSync("./uploads/newFolder" + userData.avatar)) {
           fs.unlinkSync("./uploads/newFolder" + userData.avatar);
         }
       }
-      let hashPassword = userData.password;
+      let hashPassword = userData ? userData.password : null;
       if (password) {
         hashPassword = bcrypt.hashSync(password, 10);
       }
@@ -167,6 +167,7 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
 export const deleteUser = async (req, res) => {
   try {
     const userID = req.params.user_id;
@@ -243,7 +244,7 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password} = req.body;
 
     const existUser = await userModel.findOne({ email: email });
     if (!existUser) {
@@ -274,6 +275,7 @@ export const signIn = async (req, res) => {
     return res.status(200).json({
       data: existUser,
       success: true,
+      status:'active',
       token: token,
       message: "Login Successful!",
     });

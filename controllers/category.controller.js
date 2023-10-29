@@ -112,6 +112,7 @@ export const updateCategory = async (req, res) => {
       if(updatedData.acknowledged){
         return res.status(200).json({
             message: "Updated",
+            success:true
           });
       }
     });
