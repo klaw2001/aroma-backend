@@ -71,6 +71,7 @@ export const addCategory = (req, res) => {
         return res.status(201).json({
           data: categoryData,
           message: "Category Added Successfully",
+          success: true,
         });
       }
     });
@@ -109,11 +110,11 @@ export const updateCategory = async (req, res) => {
         }
       );
 
-      if(updatedData.acknowledged){
+      if (updatedData.acknowledged) {
         return res.status(200).json({
-            message: "Updated",
-            success:true
-          });
+          message: "Updated",
+          success: true,
+        });
       }
     });
   } catch (error) {
@@ -123,48 +124,48 @@ export const updateCategory = async (req, res) => {
   }
 };
 
-export const deteleCategory = async(req,res) =>{
-    try {
-        const categoryID = req.params.category_id;
-        const category = await categoryModel.findOne({_id:categoryID})
-    
-        let image = category.image;
-    
-        if (req.file !== undefined) {
-            image = req.file.filename;
-            if (fs.existsSync("./uploads/category/" + category.image)) {
-              fs.unlinkSync("./uploads/category/" + category.image);
-            }
-          }
+export const deteleCategory = async (req, res) => {
+  try {
+    const categoryID = req.params.category_id;
+    const category = await categoryModel.findOne({ _id: categoryID });
 
-          const deleteCat = await categoryModel.deleteOne(category)
-          if(deleteCat.acknowledged){
-            return res.status(200).json({
-                message: "Category Deleted!",
-              });
-          }
-        
-    } catch (error) {
-        return res.status(500).json({
-            message:error.message
-        })
+    let image = category.image;
+
+    if (req.file !== undefined) {
+      image = req.file.filename;
+      if (fs.existsSync("./uploads/category/" + category.image)) {
+        fs.unlinkSync("./uploads/category/" + category.image);
+      }
     }
-}
 
-export const getSingleCategory = async(req,res)=>{
-    try {
-        const categoryID = req.params.category_id
-        const categoryData = await categoryModel.findOne({_id:categoryID});
-        if (categoryData) {
-        return res.status(200).json({
-            data: categoryData,
-            message: "Success",
+    const deleteCat = await categoryModel.deleteOne(category);
+    if (deleteCat.acknowledged) {
+      return res.status(200).json({
+        message: "Category Deleted!",
+      success: true,
+
       });
     }
-        
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message,
-          });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getSingleCategory = async (req, res) => {
+  try {
+    const categoryID = req.params.category_id;
+    const categoryData = await categoryModel.findOne({ _id: categoryID });
+    if (categoryData) {
+      return res.status(200).json({
+        data: categoryData,
+        message: "Success",
+      });
     }
-}
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
