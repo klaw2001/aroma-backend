@@ -76,7 +76,22 @@ export const addUser = (req, res) => {
     uploadUserImage(req, res, function (err) {
       if (err) return res.status(400).json({ message: err.message });
 
-      const { email, password, role } = req.body;
+      const {
+        firstname,
+        lastname,
+        email,
+        password,
+        contact,
+        dateofbirth,
+        gender,
+        about,
+        role,
+        status,
+        country,
+        state,
+        city,
+        address,
+      } = req.body;
       let avatar = null;
       if (req.file !== undefined) {
         avatar = req.file.filename;
@@ -85,9 +100,21 @@ export const addUser = (req, res) => {
 
       const hashPassword = bcrypt.hashSync(password, 10);
       const userData = new userModel({
+        firstname,
+        lastname,
         email,
         password: hashPassword,
+        contact,
+        dateofbirth,
+        gender,
+        about,
         role,
+        status,
+        country,
+        state,
+        city,
+        address,
+        avatar,
       });
       userData.save();
       if (userData) {
@@ -121,6 +148,11 @@ export const updateUser = async (req, res) => {
         gender,
         about,
         role,
+        status,
+        country,
+        state,
+        city,
+        address,
       } = req.body;
 
       const userData = await userModel.findOne({ _id: userID });
@@ -129,7 +161,10 @@ export const updateUser = async (req, res) => {
 
       if (req.file !== undefined) {
         avatar = req.file.filename;
-        if (userData && fs.existsSync("./uploads/newFolder" + userData.avatar)) {
+        if (
+          userData &&
+          fs.existsSync("./uploads/newFolder" + userData.avatar)
+        ) {
           fs.unlinkSync("./uploads/newFolder" + userData.avatar);
         }
       }
@@ -151,6 +186,11 @@ export const updateUser = async (req, res) => {
             about: about,
             avatar: avatar,
             role: role,
+            status,
+            country,
+            state,
+            city,
+            address,
           },
         }
       );
@@ -244,7 +284,7 @@ export const signUp = async (req, res) => {
 
 export const signIn = async (req, res) => {
   try {
-    const { email, password} = req.body;
+    const { email, password } = req.body;
 
     const existUser = await userModel.findOne({ email: email });
     if (!existUser) {
@@ -275,7 +315,7 @@ export const signIn = async (req, res) => {
     return res.status(200).json({
       data: existUser,
       success: true,
-      status:'active',
+      status: "active",
       token: token,
       message: "Login Successful!",
     });

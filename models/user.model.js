@@ -47,9 +47,25 @@ const UserSchema = new Schema({
       },
     status:{
         type:String,
-        enum: ['active', 'inactive'], 
+        enum: ['active', 'inactive','banned','rejected'], 
         default:'inactive'
-    }
+    },
+    country: {
+        type: String,
+        default: null,
+    },
+    state: {
+        type: String,
+        default: null,
+    },
+    city: {
+        type: String,
+        default: null,
+    },
+    address: {
+        type: String,
+        default: null,
+    },
 })
 
 export default mongoose.model("User",UserSchema)

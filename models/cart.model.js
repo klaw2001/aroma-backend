@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import categoryModel from "./category.model";
-import subcategoryModel from "./subcategory.model";
 import productModel from "./product.model";
 import userModel from "./user.model";
 const Schema = mongoose.Schema;

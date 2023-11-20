@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routers/user.router";
 import categoryrouter from "./routers/category.router";
-import subcategoryRouter from "./routers/subcategory.router";
 import productRouter from "./routers/product.router";
 import cartRouter from "./routers/cart.router";
 
@@ -45,6 +44,5 @@ app.listen(PORT, () => {
 });
 app.use('/users',userRouter)
 app.use('/category',categoryrouter)
-app.use('/sub-category',subcategoryRouter)
 app.use('/products',productRouter)
 app.use('/cart',cartRouter)
