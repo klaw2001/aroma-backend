@@ -154,13 +154,13 @@ export const updateProduct = async (req, res) => {
       const { name, category, quantity, price, shortdescription, description } =
         req.body;
 
-      let thumbnail = productData.thumbnail;
-      if (req.files && req.files["thumbnail"]) {
-        thumbnail = req.files["thumbnail"][0].filename;
-        if (fs.existsSync("./uploads/products/" + productData.thumbnail)) {
-          fs.unlinkSync("./uploads/products/" + productData.thumbnail);
-        }
-      }
+      // let thumbnail = productData.thumbnail;
+      // if (req.files && req.files["thumbnail"]) {
+      //   thumbnail = req.files["thumbnail"][0].filename;
+      //   if (fs.existsSync("./uploads/products/" + productData.thumbnail)) {
+      //     fs.unlinkSync("./uploads/products/" + productData.thumbnail);
+      //   }
+      // }
 
       let images = Array.isArray(productData.images) ? productData.images : [];
 
